@@ -43,4 +43,5 @@ configure_dev_package("r_db" "A C++ SQLite wrapper.")
 install(
     DIRECTORY include/sqlite3
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+    FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp"
 )
