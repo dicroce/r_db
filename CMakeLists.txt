@@ -9,8 +9,8 @@ include(FetchContent)
 
 FetchContent_Declare(
     r_utils
-    GIT_REPOSITORY https://github.com/dicroce/r_utils.git
-    GIT_TAG        main
+    GIT_REPOSITORY https://github.com/you/r_utils.git
+    FIND_PACKAGE_ARGS NAMES r_utils
 )
 FetchContent_MakeAvailable(r_utils)
 
@@ -26,7 +26,8 @@ add_library(
 
 target_include_directories(
     r_db PUBLIC
-    include
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
 )
 
 target_link_libraries(
@@ -36,3 +37,10 @@ target_link_libraries(
 )
 
 add_subdirectory(ut)
+
+configure_dev_package("r_db" "A C++ SQLite wrapper.")
+
+install(
+    DIRECTORY include/sqlite3
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
