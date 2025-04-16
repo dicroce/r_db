@@ -36,12 +36,19 @@ target_link_libraries(
     ${CMAKE_DL_LIBS}
 )
 
+option(BUILD_INSTALL_DEV_PACKAGES "Install dev packages for subprojects" OFF)
+
 add_subdirectory(ut)
 
-configure_dev_package("r_db" "A C++ SQLite wrapper.")
+if(PROJECT_IS_TOP_LEVEL OR BUILD_INSTALL_DEV_PACKAGES)
 
-install(
-    DIRECTORY include/sqlite3
-    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-    FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp"
-)
+    configure_dev_package("r_db" "A C++ SQLite wrapper.")
+
+    install(
+        DIRECTORY include/sqlite3
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+        FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp"
+    )
+
+endif()
+
